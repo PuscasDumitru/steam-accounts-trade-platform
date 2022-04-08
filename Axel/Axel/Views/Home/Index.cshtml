@@ -1,8 +1,58 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@*@model IEnumerable<Domain.Entities.Announcement>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    @{
+        ViewData["Title"] = "Index";
+    }
+
+    <h1>Announcements</h1>
+
+
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.Raw(item.HtmlContent)
+                    </td>
+
+                </tr>
+                }
+            </tbody>
+        </table>*@
+
+
+<ejs-grid id="Grid" dataSource="@ViewBag.DataSource" allowPaging="true" allowSorting="true" allowFiltering="true" allowGrouping="true" rowTemplate="#template">
+    <e-grid-pagesettings pageSize="6"></e-grid-pagesettings>
+    <e-grid-columns>
+        <e-grid-column field="OrderID" headerText="Order ID" textAlign="Right" width="120"></e-grid-column>
+        <e-grid-column field="CustomerID" headerText="Customer ID" width="150"></e-grid-column>
+        <e-grid-column field="OrderDate" headerText="Order Date" width="130" textAlign="Right" format="yMd"></e-grid-column>
+        <e-grid-column field="ShipCountry" headerText="Ship Country" width="120"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script id="template" type="text/x-template">
+    <tr>
+        <td>
+            ouz
+        </td>
+    </tr>
+</script>

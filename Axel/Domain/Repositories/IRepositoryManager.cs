@@ -9,8 +9,10 @@ namespace Domain.Repositories
 {
     public interface IRepositoryManager
     {
-        IContentRepository ContentRepository { get; }
+        IAnnouncementRepository AnnouncementRepository { get; }
         IAccountRepository AccountRepository { get; }
+        IRoleRepository RoleRepository { get; }
+        IUserRepository UserRepository { get; }
         IUnitOfWork UnitOfWork { get; }
     }
 }

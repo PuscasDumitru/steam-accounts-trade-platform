@@ -26,22 +26,23 @@ namespace Persistence.Repositories
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
-            return this.RepositoryContext.Set<T>().Where(expression).AsNoTracking();
+            return this.RepositoryContext.Set<T>().Where(expression);
         }
 
-        public void Create(T entity)
+        public virtual void Create(T entity)
         {
             this.RepositoryContext.Set<T>().Add(entity);
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             this.RepositoryContext.Set<T>().Update(entity);
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             this.RepositoryContext.Set<T>().Remove(entity);
         }
+
     }
 }

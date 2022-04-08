@@ -9,7 +9,7 @@ namespace Domain.Entities
     public class Screenshot
     {
         public int Id { get; set; }
-        public int ContentId { get; set; }
+        public int AnnouncementId { get; set; }
 
         [Required]
         public byte[] ScreenShot { get; set; }

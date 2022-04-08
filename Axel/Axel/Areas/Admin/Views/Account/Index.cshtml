@@ -1,65 +1,350 @@
-﻿@model IEnumerable<Domain.Entities.Account>
+﻿@model IEnumerable<Domain.DataTransferObjects.AccountDto>
+@*@model Axel.Areas.Admin.PaginatedList<Domain.Entities.Account>*@
 
-@{
-    ViewData["Title"] = "Index";
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Account List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Account" asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Create New Account
+            </a>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+@if (Model.Count() > 0)
+{
+
+    @*<form asp-action="Index" method="get">
+            <div class="form-actions no-color">
+                <p>
+                    Find by Steam Link: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="Search" class="btn btn-primary" /> |
+                    <a asp-action="Index">Back to Full List</a>
+                </p>
+            </div>
+        </form>*@
+
+    @*<table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                    <tr>
+
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["SteamLvlSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Steam Level</a>
+                        </th>
+                        <th>Steam Link</th>
+                        <th>BansCount</th>
+                        <th>Price</th>
+                        <th>Year Created</th>
+                        <th>
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">DateTime Added</a>
+                        </th>
+                    </tr>
+                </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="20%">@obj.SteamLevel</td>
+                        <td width="20%">@obj.SteamLink</td>
+                        <td width="20%">@obj.BansCount</td>
+                        <td width="20%">@obj.Price</td>
+                        <td width="20%">@obj.YearCreated</td>
+                        <td width="20%">@obj.DateTimeAdded</td>
+
+                        <td class="text-center">
+                            <div class="w-75 btn-group role=" group"">
+                                <a asp-controller="Account" asp-route-Id="@obj.Id" asp-action="Details" class="btn btn-secondary mx-2">
+                                    <i class="far fa-eye"></i>
+                                </a>
+
+                                <a asp-controller="Account" asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-primary mx-2">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <a asp-controller="Account" asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+
+                                @if (obj.AnnouncementId == 0)
+                                {
+                                    <a asp-controller="Announcement" asp-action="Create" asp-route-accountId="@obj.Id" class="btn btn-secondary mx-2">
+                                        Add
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Announcement" asp-action="Edit" asp-route-accountId="@obj.Id" class="btn btn-secondary mx-2">
+                                        Edit
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>*@
+
+    <ejs-grid id="Grid" dataSource="@Model" allowPaging="true" allowSorting="true" allowFiltering="true" allowGrouping="true" rowTemplate="#rowtemplate">
+        <e-grid-pagesettings pageSize="4"></e-grid-pagesettings>
+        <e-grid-columns>
+            <e-grid-column field="Id" headerText="Id" width="120"></e-grid-column>
+            <e-grid-column field="SteamLevel" headerText="Steam Level" width="150"></e-grid-column>
+            <e-grid-column field="SteamLink" headerText="Steam Link" width="130"></e-grid-column>
+            <e-grid-column field="BansCount" headerText="Bans" width="120"></e-grid-column>
+            <e-grid-column field="Price" headerText="Price" width="120"></e-grid-column>
+            <e-grid-column field="YearCreated" headerText="Year Created" width="120"></e-grid-column>
+            <e-grid-column field="DateTimeAdded" headerText="Date Added" width="120" format="yMd"></e-grid-column>
+
+        </e-grid-columns>
+    </ejs-grid>
+
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.SteamLevel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SteamLink)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BansCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTimeAdded)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SteamLevel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SteamLink)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BansCount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.YearCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateTimeAdded)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+else
+{
+    <p>
+        There are no accounts.
+    </p>
 }
-    </tbody>
-</table>
+
+<style type="text/css" class="cssStyles">
+
+    .details {
+        border-color: #e0e0e0;
+        border-style: solid;
+    }
+
+    .details {
+        border-width: 1px 0px 0px 0px;
+        padding-left: 18px;
+    }
+
+    .e-bigger .details {
+        padding-left: 25px;
+    }
+
+    .e-device .details {
+        padding-left: 8px;
+    }
+
+    .details > table {
+        width: 100%;
+    }
+
+    .CardHeader {
+        font-weight: 600;
+    }
+
+    td {
+        padding: 2px 2px 3px 4px;
+    }
+</style>
+
+<script>
+
+    var url;
+    function seeDetails(id) {
+
+        url = "/Admin/Account/Details/" + id;
+        window.location.href = url;
+    }
+
+    function deleteAcc(id) {
+
+        url = "/Admin/Account/Delete/" + id;
+        window.location.href = url;
+    }
+
+    function editAcc(id) {
+
+        url = "/Admin/Account/Edit/" + id;
+        window.location.href = url;
+    }
+
+    function addAnnouncement() {
+        url = "/Admin/Announcement/Create";
+        window.location.href = url;
+    }
+
+    function editAnnouncement(id) {
+        url = "/Admin/Announcement/Edit/" + id;
+        window.location.href = url;
+    }
+    
+</script>
+
+<!--$.ajax({
+            type: 'GET',
+            url: '@Url.Action("Details")',
+
+            contentType: 'application/json; charset=UTF-8',
+            data: { id: takenId },
+            success: function () {-->
+@*window.location.href = '@Url.Action("Details", "Account")';*@
+
+<!--},
+error: function () {
+alert('Failed to receive the Data');
+console.log('Failed ');
+}
+})-->
+
+<script id="rowtemplate" type="text/x-template">
+
+    <tr>
+        <td>${Id}</td>
+        <td>${SteamLevel}</td>
+        <td>${SteamLink}</td>
+        <td>${BansCount}</td>
+        <td>${Price}</td>
+        <td>${YearCreated}</td>
+        <td>${DateTimeAdded.toLocaleDateString()}</td>
+
+        <td class="text-center">
+            <div class="w-75 btn-group role=" group"">
+                <button type="button" class="btn btn-secondary mx-2" onclick="seeDetails(${Id})">
+                    <i class="far fa-eye"></i>
+                </button>
+
+                <button type="button" class="btn btn-primary mx-2" onclick="editAcc(${Id})">
+                    <i class="fas fa-edit"></i>
+                </button>
+
+                <button type="button" class="btn btn-danger mx-2" onclick="deleteAcc(${Id})">
+                    <i class="far fa-trash-alt"></i>
+                </button>
+
+                ${if(AnnouncementId > 0)}
+
+                    <button type="button" class="btn btn-danger mx-2" onclick="addAnnouncement()"> Add </button>
+                ${else}
+
+                    <button type="button" class="btn btn-danger mx-2" onclick="editAnnouncement(${ AnnouncementId })"> Edit </button>
+                ${/if}
+
+            </div>
+        </td>
+
+        @*@{
+
+                <td class="text-center">
+                    <div class="w-75 btn-group role=" group"">
+
+                        <a asp-controller="Account" asp-route-Id="${Id}" asp-action="Details" class="btn btn-secondary mx-2">
+                            <i class="far fa-eye"></i>
+                        </a>
+
+                        <a asp-controller="Account" asp-route-Id="${Id}" asp-action="Edit" class="btn btn-primary mx-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        <a asp-controller="Account" asp-route-Id="${Id}" asp-action="Delete" class="btn btn-danger mx-2">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+
+                        @if (${Id} == 0)
+                            {
+                                <a asp-controller="Announcement" asp-action="Create" asp-route-accountId="${Id}" class="btn btn-secondary mx-2">
+                                    Add
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Announcement" asp-action="Edit" asp-route-accountId="${Id}" class="btn btn-secondary mx-2">
+                                    Edit
+                                </a>
+                            }
+                    </div>
+                </td>
+            }*@
+
+
+        @*<td class="details">
+                <table class="CardTable" cellpadding="3" cellspacing="2">
+                    <colgroup>
+                        <col width="50%">
+                        <col width="50%">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class="CardHeader">Id </td>
+                            <td>${Id} </td>
+                        </tr>
+                        <tr>
+                            <td class="CardHeader">Steam Level</td>
+                            <td>${SteamLevel} </td>
+                        </tr>
+                        <tr>
+                            <td class="CardHeader">
+                                Steam Link
+                            </td>
+
+                            <td>
+                                ${SteamLink}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="CardHeader">
+                                Bans
+                            </td>
+                            <td>
+                                ${BansCount}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="CardHeader">
+                                Price
+                            </td>
+                            <td>
+                                ${Price}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="CardHeader">
+                                Year Created
+                            </td>
+                            <td>
+                                ${YearCreated}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="CardHeader">
+                                Date Added
+                            </td>
+                            <td>
+                                ${DateTimeAdded.toLocaleDateString()}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>*@
+
+    </tr>
+</script>
+
+@*@{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>*@

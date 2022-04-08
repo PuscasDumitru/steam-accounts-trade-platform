@@ -6,22 +6,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
     public class RepositoryDbContext : IdentityDbContext
     {
+
         public RepositoryDbContext(DbContextOptions<RepositoryDbContext> options)
             : base(options)
         {
+
         }
+
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountGame> AccountGame { get; set; }
         public DbSet<Category> Category { get; set; }
-        public DbSet<Content> Content { get; set; }
+        public DbSet<Announcement> Announcement { get; set; }
         public DbSet<Game> Game { get; set; }
         public DbSet<GameCategory> GameCategory { get; set; }
         public DbSet<Screenshot> Screenshot { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Seed(_userManager, _roleManager);
+        //}
 
     }
 }

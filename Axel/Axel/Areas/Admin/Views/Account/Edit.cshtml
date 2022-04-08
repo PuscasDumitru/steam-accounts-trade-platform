@@ -1,58 +1,101 @@
-﻿@model Domain.Entities.Account
+﻿@model Domain.DataTransferObjects.AccountDto
 
-@{
-    ViewData["Title"] = "Edit";
-}
+<form method="post">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
 
-<h1>Edit</h1>
+        <div class="form-group row">
+            <h2 class="text-info pl-3">
+                Edit Account
+            </h2>
+        </div>
 
-<h4>Account</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="SteamLevel" class="control-label"></label>
-                <input asp-for="SteamLevel" class="form-control" />
-                <span asp-validation-for="SteamLevel" class="text-danger"></span>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="SteamLevel"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="SteamLevel" class="form-control" />
+                        <span asp-validation-for="SteamLevel" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="SteamLink"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="SteamLink" class="form-control" />
+                        <span asp-validation-for="SteamLink" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="BansCount"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="BansCount" class="form-control" />
+                        <span asp-validation-for="BansCount" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="YearCreated"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="YearCreated" class="form-control" />
+                        <span asp-validation-for="YearCreated" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DateTimeAdded"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DateTimeAdded" class="form-control" />
+                        <span asp-validation-for="DateTimeAdded" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="SteamLink" class="control-label"></label>
-                <input asp-for="SteamLink" class="form-control" />
-                <span asp-validation-for="SteamLink" class="text-danger"></span>
+            <div class="col-4">
+                @* Keep this empty *@
             </div>
-            <div class="form-group">
-                <label asp-for="BansCount" class="control-label"></label>
-                <input asp-for="BansCount" class="form-control" />
-                <span asp-validation-for="BansCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="YearCreated" class="control-label"></label>
-                <input asp-for="YearCreated" class="form-control" />
-                <span asp-validation-for="YearCreated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateTimeAdded" class="control-label"></label>
-                <input asp-for="DateTimeAdded" class="form-control" />
-                <span asp-validation-for="DateTimeAdded" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,174 @@
+﻿@model Domain.DataTransferObjects.AnnouncementDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Announcement</h4>
+<hr />
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-action="Create">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="HtmlContent" name="foo" id="foo" />
+                <input type="hidden" asp-for="AccId" />
+
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+    </div>*@
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="annon-form" novalidate class="needs-validation">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="HtmlContent" id="content" />
+            <input type="hidden" asp-for="AccId" id="acc" />
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" id="title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" id="description" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" id="createButton"> Create </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ejs-richtexteditor id="editor"
+                    blur="blur">
+    <e-richtexteditor-quicktoolbarsettings image="@ViewBag.image"></e-richtexteditor-quicktoolbarsettings>
+    <e-richtexteditor-toolbarsettings items="@ViewBag.tools"></e-richtexteditor-toolbarsettings>
+    <e-content-template>
+        <p>
+            The Rich Text Editor control is WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content.
+            Users can format their content using standard toolbar commands.
+        </p>
+        <p><b> Key features:</b></p>
+
+        <ul>
+            <li><p> Provides &lt; IFRAME &gt; and &lt; DIV &gt; modes </p></li>
+
+            <li><p> Capable of handling markdown editing.</p></li>
+
+            <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
+
+            <li><p> Provides a fully customizable toolbar.</p></li>
+
+            <li><p> Provides HTML view to edit the source directly for developers.</p></li>
+
+            <li><p> Supports third - party library integration.</p></li>
+
+            <li><p> Allows preview of modified content before saving it.</p></li>
+
+            <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+
+            <li><p> Contains undo / redo manager.</p></li>
+
+            <li><p> Creates bulleted and numbered lists.</p></li>
+
+        </ul>
+    </e-content-template>
+</ejs-richtexteditor>
+
+<div>
+    <a asp-controller="Account" asp-action="Index">Back to List</a>
+</div>
+
+
+<script>
+
+    document.getElementById('createButton').addEventListener('click', function () {
+
+        
+
+        $("#content").val(function () {
+            var obj = document.getElementById('editor').ej2_instances[0];
+            return obj.value;
+        });
+
+        var data = {
+            Title: $("#title").val(),
+            Description: $("#description").val(),
+            HtmlContent: $("#content").val(),
+            AccId: $("#acc").val()
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create")',
+            headers: {
+                "RequestVerificationToken": getAntiForgeryToken()
+            },
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            success: function () {  
+                window.location.href = '@Url.Action("Index", "Account")';
+            },
+            error: function () {
+                alert('Failed to receive the Data');
+                console.log('Failed ');
+            }
+        })
+
+        function getAntiForgeryToken() {
+            var token = '@Html.AntiForgeryToken()';
+            token = $(token).val();
+            return token;
+        }
+
+    });
+    //function blur() {
+    //    appendElement('Rich Text Editor <b>blur</b> event called<hr>');
+    //}
+
+    //function appendElement(html) {
+
+    //    window.alert(html);
+    //}
+
+    @*var model = @Html.Raw(Json.Serialize(Model));*@
+
+    @*document.getElementById('getRTEvalue').addEventListener('click', function () {
+        var obj = document.getElementById('editor').ej2_instances[0];
+        var value = JSON.stringify(
+            { text: obj.value }
+        );
+        const Http = new XMLHttpRequest();
+        const url = '@Url.Action("Save")';
+        Http.open("POST", url);
+        Http.setRequestHeader('Content-Type', 'application/json');
+        Http.send(value);
+    });*@
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.DataTransferObjects;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,6 @@ namespace Domain.Repositories
         Task<IEnumerable<Account>> GetAllAccountsAsync(CancellationToken cancellationToken = default);
         Task<Account> GetAccountByIdAsync(int accountId, CancellationToken cancellationToken = default);
         Task<Account> GetAccountWithDetailsAsync(int accountId, CancellationToken cancellationToken = default);
-        void CreateAccount(Account account);
-        void UpdateAccount(Account account);
-        void DeleteAccount(Account account);
+      
     }
 }

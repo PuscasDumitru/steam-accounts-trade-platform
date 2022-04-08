@@ -13,7 +13,7 @@ namespace Domain.Entities
 
         [ForeignKey("CategoryId")]
         public virtual ICollection<GameCategory> GameCategories { get; set; }
-
+            
         [Required]
         [StringLength(30)]
         public string Name { get; set; }

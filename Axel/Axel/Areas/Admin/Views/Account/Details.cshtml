@@ -1,54 +1,98 @@
-﻿@model Domain.Entities.Account
+﻿@model Domain.DataTransferObjects.AccountDto
 
-@{
-    ViewData["Title"] = "Details";
-}
+<form method="get">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
 
-<h1>Details</h1>
+        <div class="form-group row">
+            <h2 class="text-info pl-3">
+                Account Details
+            </h2>
+        </div>
 
-<div>
-    <h4>Account</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SteamLevel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SteamLevel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SteamLink)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SteamLink)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BansCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BansCount)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.YearCreated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.YearCreated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateTimeAdded)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateTimeAdded)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="SteamLevel"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="SteamLevel" disabled class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="SteamLink"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="SteamLink" disabled class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="BansCount"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="BansCount" disabled class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Price" disabled class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="YearCreated"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="YearCreated" disabled class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="DateTimeAdded"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="DateTimeAdded" disabled class="form-control" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <a asp-route-Id="@Model.Id" asp-action="Edit" class="btn btn-info w-100">Edit</a>
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i>Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>

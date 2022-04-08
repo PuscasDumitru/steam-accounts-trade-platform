@@ -11,17 +11,28 @@ namespace Persistence.Repositories
 {
     internal sealed class AccountRepository : RepositoryBase<Account>, IAccountRepository
     {
-        private readonly RepositoryDbContext _dbContext;
-
         public AccountRepository(RepositoryDbContext repositoryContext)
-           : base(repositoryContext)
+            : base(repositoryContext)
         {
         }
         public async Task<IEnumerable<Account>> GetAllAccountsAsync(CancellationToken cancellationToken = default)
         {
-            return await FindAll()
-               .OrderBy(acc => acc.SteamLink)
-               .ToListAsync(cancellationToken);
+            return await (from acc in RepositoryContext.Account
+                          join announcement in RepositoryContext.Announcement
+                          on acc.Id equals announcement.Account.Id
+                          into gj
+                          from subContent in gj.DefaultIfEmpty()
+                          select new Account
+                          {
+                              Id = acc.Id,
+                              SteamLevel = acc.SteamLevel,
+                              SteamLink = acc.SteamLink,
+                              BansCount = acc.BansCount,
+                              Price = acc.Price,
+                              YearCreated = acc.YearCreated,
+                              DateTimeAdded = acc.DateTimeAdded,
+                              AnnouncementId = (subContent != null) ? subContent.Id : 0
+                          }).ToListAsync(cancellationToken);
         }
         public async Task<Account> GetAccountByIdAsync(int accountId, CancellationToken cancellationToken = default)
         {
@@ -34,17 +45,17 @@ namespace Persistence.Repositories
                 .Include(ac => ac.AccountGames)
                 .FirstOrDefaultAsync(cancellationToken);
         }
-        public void CreateAccount(Account account)
+        public override void Create(Account account)
         {
-            Create(account);
+            base.Create(account);
         }
-        public void UpdateAccount(Account account)
+        public override void Update(Account account)
         {
-            Update(account);
+            base.Update(account);
         }
-        public void DeleteAccount(Account account)
+        public override void Delete(Account account)
         {
-            Delete(account);
+            base.Delete(account);
         }
     }
 }
