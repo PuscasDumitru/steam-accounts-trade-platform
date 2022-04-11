@@ -50,30 +50,39 @@ namespace Axel.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task Create([FromBody]AnnouncementDto announcementDto)
         {
             await _serviceManager.AnnouncementService.CreateAsync(announcementDto);
 
-            //return RedirectToAction(nameof(Index), "Account");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int accountId, CancellationToken cancellationToken)
         {
+            ViewBag.image = new[] {
+                "Replace", "Align", "Caption", "Remove", "InsertLink", "OpenImageLink", "-",
+                "EditImageLink", "RemoveImageLink", "Display", "AltText", "Dimension"
+            };
+
+            ViewBag.tools = new[] {
+                "Bold", "Italic", "Underline", "StrikeThrough",
+                "FontName", "FontSize", "FontColor", "BackgroundColor",
+                "LowerCase", "UpperCase", "|",
+                "Formats", "Alignments", "OrderedList", "UnorderedList",
+                "Outdent", "Indent", "|",
+                "CreateLink", "Image", "CreateTable", "|", "ClearFormat", "Print",
+                "SourceCode", "FullScreen", "|", "Undo", "Redo"
+            };
+
             var announcementDto = await _serviceManager.AnnouncementService.GetAnnouncementByAccountIdAsync(accountId, cancellationToken);
 
             return View(announcementDto);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(AnnouncementDto announcementDto, CancellationToken cancellationToken)
+        public async Task Edit([FromBody]AnnouncementDto announcementDto, CancellationToken cancellationToken)
         {
             await _serviceManager.AnnouncementService.UpdateAsync(announcementDto, cancellationToken);
-
-            return RedirectToAction(nameof(Index), "Account");
         }
-
     }
 }

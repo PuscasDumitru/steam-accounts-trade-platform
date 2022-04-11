@@ -28,59 +28,11 @@ namespace Axel.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(
-            //string sortOrder,
-            //string currentFilter,
-            //string searchString,
-            //int? pageNumber,
-            CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             var accounts = await _serviceManager.AccountService.GetAllAccountsAsync(cancellationToken);
 
             return View(accounts);
-
-            //ViewData["CurrentSort"] = sortOrder;
-            //ViewData["SteamLvlSortParm"] = String.IsNullOrEmpty(sortOrder) ? "steamLvl_desc" : "";
-            //ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-
-            //if (searchString != null)
-            //{
-            //    pageNumber = 1;
-            //}
-            //else
-            //{
-            //    searchString = currentFilter;
-            //}
-
-            //ViewData["CurrentFilter"] = searchString;
-
-            ////var accounts = await _serviceManager.AccountService.GetAllAccountsAsync(cancellationToken);
-            //var accounts = from acc in _context.Account
-            //               select acc;
-
-            //if (!String.IsNullOrEmpty(searchString))
-            //{
-            //    accounts = accounts.Where(acc => acc.SteamLink.Contains(searchString));
-            //}
-
-            //switch (sortOrder)
-            //{
-            //    case "steamLvl_desc":
-            //        accounts = accounts.OrderByDescending(acc => acc.SteamLevel);
-            //        break;
-            //    case "Date":
-            //        accounts = accounts.OrderBy(acc => acc.DateTimeAdded);
-            //        break;
-            //    case "date_desc":
-            //        accounts = accounts.OrderByDescending(acc => acc.DateTimeAdded);
-            //        break;
-            //    default:
-            //        accounts = accounts.OrderBy(acc => acc.YearCreated);
-            //        break;
-            //}
-
-            //int pageSize = 3;
-            //return View(await PaginatedList<Account>.CreateAsync(accounts.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]
