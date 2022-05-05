@@ -19,6 +19,14 @@ namespace Persistence
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=J76PYD3\\SQLEXPRESS;Database=AxelDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }
+        }
+
         public DbSet<Account> Account { get; set; }
         public DbSet<AccountGame> AccountGame { get; set; }
         public DbSet<Category> Category { get; set; }

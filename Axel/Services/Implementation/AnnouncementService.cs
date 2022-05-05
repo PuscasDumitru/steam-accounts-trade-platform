@@ -22,6 +22,15 @@ namespace Services.Implementation
 
             return announcementsDto;
         }
+
+        public async Task<AnnouncementDto> GetAnnouncementByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            var announcement = await _repositoryManager.AnnouncementRepository.GetAnnouncementByIdAsync(id, cancellationToken);
+            var announcementDto = announcement.Adapt<AnnouncementDto>();
+
+            return announcementDto;
+        }
+
         public async Task<AnnouncementDto> GetAnnouncementByAccountIdAsync(int accountId, CancellationToken cancellationToken)
         {
             var announcement = await _repositoryManager.AnnouncementRepository.GetAnnouncementByAccountIdAsync(accountId, cancellationToken);

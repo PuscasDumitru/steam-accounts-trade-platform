@@ -19,7 +19,7 @@ namespace Persistence.Repositories
 
         public async Task<IEnumerable<Announcement>> GetAllAnnouncementsAsync(CancellationToken cancellationToken = default)
         {
-            return await FindAll()
+            return await RepositoryContext.Announcement.Include(annon => annon.Account)
                .ToListAsync(cancellationToken);
         }
         public async Task<Announcement> GetAnnouncementByAccountIdAsync(int accountId, CancellationToken cancellationToken = default)
@@ -28,6 +28,13 @@ namespace Persistence.Repositories
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
+        public async Task<Announcement> GetAnnouncementByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            //return await FindByCondition(annon => annon.Id.Equals(id))
+            //    .SingleOrDefaultAsync(cancellationToken);
+            return await RepositoryContext.Announcement.Include(annon => annon.Account).SingleOrDefaultAsync(annon => annon.Id == id);
+        }
+        
         public override void Create(Announcement announcement)
         {
             base.Create(announcement);

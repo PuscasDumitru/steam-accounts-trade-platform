@@ -1,1 +1,24 @@
-<app-show-weather></app-show-weather>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Title</th>
+                    <th>Steam Level</th>
+                    <th>BansCount</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let annon of service.list" (click)="onGetAnnouncement(annon)">
+                    <td>{{annon.title}}</td>
+                    <td>{{annon.account.steamLevel}}</td>
+                    <td>{{annon.account.bansCount}}</td>
+                    <td>{{annon.account.price}}</td>
+                    <td> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

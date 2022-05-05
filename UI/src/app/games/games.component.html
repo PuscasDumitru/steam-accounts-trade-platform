@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Play Time</th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let game of service.list">
+                    <td>{{game.name}}</td>
+                    <td>{{game.playtime_forever}}</td>
+                    
+                    <td> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

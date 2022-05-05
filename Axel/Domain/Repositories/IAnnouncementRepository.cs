@@ -12,5 +12,6 @@ namespace Domain.Repositories
     {
         Task<IEnumerable<Announcement>> GetAllAnnouncementsAsync(CancellationToken cancellationToken = default);
         Task<Announcement> GetAnnouncementByAccountIdAsync(int accountId, CancellationToken cancellationToken = default);
+        Task<Announcement> GetAnnouncementByIdAsync(int id, CancellationToken cancellationToken = default);
     }
 }
